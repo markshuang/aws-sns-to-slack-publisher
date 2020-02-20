@@ -9,7 +9,7 @@ from boolean import boolean
 import boto3
 from botocore.exceptions import ClientError
 import jsonschema
-from slackclient import SlackClient
+from slack import WebClient
 from tenacity import retry, retry_if_exception_type, stop_after_delay, wait_exponential
 
 log_level = os.environ.get('LOG_LEVEL', 'INFO')
@@ -18,7 +18,7 @@ _logger = logging.getLogger(__name__)
 
 SLACK_API_TOKEN = os.environ.get('SLACK_API_TOKEN')
 SLACK_DEFAULT_CHANNEL = os.environ.get('SLACK_DEFAULT_CHANNEL')
-SLACK = SlackClient(SLACK_API_TOKEN)
+SLACK = WebClient(SLACK_API_TOKEN)
 SLACK_SCHEMA_FILE_PATH = os.path.join(os.path.dirname(__file__), '../slack-message-schema.json')
 with open(SLACK_SCHEMA_FILE_PATH) as f:
     SLACK_MESSAGE_SCHEMA = json.load(f)
